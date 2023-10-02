@@ -37,4 +37,25 @@
     }
     ```
 
-- 
+- For loop Unrolling.
+    - Use ++x instead of x++.
+    - Normal loop vs. Loop Unrolling
+        ```
+        // normal loop.
+        for(x = 0; x < 100; ++x)
+        {
+            delete(x);
+        }
+        ```
+
+        ```
+        // loop unrolling: multi cores can operate at the same time.
+        for(x = 0; x < 100; x += 5)
+        {
+            delete(x);
+            delete(x+1);
+            delete(X+2);
+            delete(x+3);
+            delete(x+4);
+        }
+        ```
