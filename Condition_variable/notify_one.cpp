@@ -2,10 +2,11 @@
 #include <iostream>
 #include <condition_variable>
 #include <thread>
+#include <atomic>
 
 std::condition_variable produce, consume;
 std::mutex mtx;
-int cargo;
+std::atomic<int> cargo;
 
 void consumer()
 {
