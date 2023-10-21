@@ -19,6 +19,7 @@ glm::mat4 getProjectionMatrix(){
 	return ProjectionMatrix;
 }
 
+glm::vec3 origin = glm::vec3(0,0,0);
 
 // Initial position : on +Z
 glm::vec3 position = glm::vec3( 0, 0, 5 ); 
@@ -95,7 +96,7 @@ void computeMatricesFromInputs(){
 	// Camera matrix
 	ViewMatrix       = glm::lookAt(
 								position,           // Camera is here
-								position+direction, // and looks here : at the same position, plus "direction"
+								origin,//position+direction, // and looks here : at the same position, plus "direction"
 								up                  // Head is up (set to 0,-1,0 to look upside-down)
 						   );
 
