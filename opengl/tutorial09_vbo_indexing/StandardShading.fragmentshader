@@ -1,3 +1,13 @@
+/*
+Author: Seulgi Kim
+Class: ECE6122 A
+Last Date Modified: 10/28/2023
+
+Description:
+
+This code is in charge of the color of the object that is dependent on
+the light, position of the light, the original color of the object, or the reflective characteristics.
+*/
 #version 120
 
 // Interpolated values from the vertex shaders
@@ -12,13 +22,24 @@ uniform sampler2D myTextureSampler;
 uniform mat4 MV;
 uniform vec3 LightPosition_worldspace;
 
-void main(){
+// Values that stay constant for the whole mesh (For rectangle).
+uniform sampler2D TextureSamplerforRectangle;
 
+// Add Green Rectangle flag
+uniform int isGreenRectangle;
+uniform int isTexture;
+varying vec2 recUV;
+
+// toggle light
+uniform int toggleLight;
+
+void main()
+{
 	// Light emission properties
 	// You probably want to put them as uniforms
 	vec3 LightColor = vec3(1,1,1);
 	float LightPower = 50.0f;
-	
+
 	// Material properties
 	vec3 MaterialDiffuseColor = texture2D( myTextureSampler, UV ).rgb;
 	vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * MaterialDiffuseColor;
@@ -47,13 +68,25 @@ void main(){
 	//  - Looking into the reflection -> 1
 	//  - Looking elsewhere -> < 1
 	float cosAlpha = clamp( dot( E,R ), 0,1 );
+
+	if (isGreenRectangle == 1)
+	{
+		gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
+        return;
+    }
+
+	if (isTexture == 1)
+	{
+		gl_FragColor = texture2D(TextureSamplerforRectangle, recUV); // RGBA format for green color
+        return;
+	}
 	
 	gl_FragColor.rgb = 
 		// Ambient : simulates indirect lighting
 		MaterialAmbientColor +
 		// Diffuse : "color" of the object
-		MaterialDiffuseColor * LightColor * LightPower * cosTheta / (distance*distance) +
+		toggleLight* MaterialDiffuseColor * LightColor * LightPower * cosTheta / (distance*distance) +
 		// Specular : reflective highlight, like a mirror
-		MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha,5) / (distance*distance);
+		toggleLight* MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha,5) / (distance*distance);
 
 }

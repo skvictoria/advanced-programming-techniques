@@ -234,6 +234,8 @@ add_executable(tutorial09_AssImp
 	common/texture.hpp
 	common/objloader.cpp
 	common/objloader.hpp
+	common/vboindexer.cpp
+	common/vboindexer.hpp
 	
 	tutorial09_vbo_indexing/StandardShading.vertexshader
 	tutorial09_vbo_indexing/StandardShading.fragmentshader

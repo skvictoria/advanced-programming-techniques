@@ -1,3 +1,13 @@
+/*
+Author: Seulgi Kim
+Class: ECE6122 A
+Last Date Modified: 10/28/2023
+
+Description:
+
+This code is in charge of the vertex coordinate of the objects or cameras.
+*/
+
 #version 120
 
 // Input vertex data, different for all executions of this shader.
@@ -11,6 +21,9 @@ varying vec3 Position_worldspace;
 varying vec3 Normal_cameraspace;
 varying vec3 EyeDirection_cameraspace;
 varying vec3 LightDirection_cameraspace;
+
+varying vec2 recUV;
+attribute vec2 rectanglevertexUV;
 
 // Values that stay constant for the whole mesh.
 uniform mat4 MVP;
@@ -40,5 +53,7 @@ void main(){
 	
 	// UV of the vertex. No special space for this one.
 	UV = vertexUV;
+	recUV = rectanglevertexUV;
+
 }
 
